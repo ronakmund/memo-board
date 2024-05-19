@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Card from '../components/card';
-import { getRandomColors } from '../utils/getRandomColors';
 
 const Wrapper = styled.div`
     position: relative;
@@ -11,27 +10,14 @@ const Wrapper = styled.div`
 `;
 
 export const Layout = () => {
-    const [dragging, setDragging] = useState(false);
-    const [style, setStyle] = useState({});
-
-    useEffect(() => {
-        const color = getRandomColors();
-        setStyle((prev) => ({ ...prev, backgroundColor: color }));
-    }, [dragging]);
-
-    const handleDragStart = (e) => {
-        setDragging(true);
-    };
-
-    const handleDragEnd = () => {
-        setDragging(false);
-    };
+    const [position, setPosition] = useState({});
 
     const handleDrop = (e) => {
         e.preventDefault();
+
         const left = `${e.clientX}px`;
         const top = `${e.clientY}px`;
-        setStyle({
+        setPosition({
             top: top,
             left: left,
         });
@@ -41,17 +27,8 @@ export const Layout = () => {
         e.preventDefault();
     };
     return (
-        <Wrapper
-            className={`container ${dragging ? 'dragging' : ''}`}
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-        >
-            <Card
-                className="box"
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-                style={style}
-            />
+        <Wrapper onDrop={handleDrop} onDragOver={handleDragOver}>
+            <Card className="box" style={position} />
         </Wrapper>
     );
 };
