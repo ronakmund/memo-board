@@ -21,7 +21,7 @@ const InputWrapper = styled.div`
     color: white;
     font-weight: 500;
     text-align: center;
-
+    box-shadow: ${(props) => props.color} 0px 8px 24px;
     &:focus-visible {
         color: white;
         border: unset;
